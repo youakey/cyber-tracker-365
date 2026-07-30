@@ -1,0 +1,16 @@
+{
+  "name": "cyber-tracker-365",
+  "version": "1.0.0",
+  "description": "Retro-futuristic strength & calisthenics command center. Vanilla ES6 + Supabase, deploys to GitHub Pages with no build step.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 4173",
+    "serve": "npx --yes serve -l 4173 .",
+    "test": "node tests/smoke.mjs",
+    "check": "for f in $(find src -name '*.js'); do node --check $f || exit 1; done && echo 'all modules parse clean'"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.0"
+  }
+}

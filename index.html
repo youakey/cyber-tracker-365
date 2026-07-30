@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+
+<!-- ══════════ ПОЛИТИКА БЕЗОПАСНОСТИ КОНТЕНТА ══════════
+     GitHub Pages не отдаёт собственных заголовков, поэтому политика живёт
+     в meta и стоит сразу после charset: meta-CSP действует только на то,
+     что разобрано после неё.
+
+     connect-src сужен до одного конкретного проекта Supabase, а не до
+     домена *.supabase.co: последний раздаёт проекты всех пользователей.
+     frame-ancestors в meta игнорируется по спецификации, работает только
+     заголовком, поэтому её здесь нет. -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  base-uri 'none';
+  object-src 'none';
+  form-action 'none';
+  frame-src 'none';
+  child-src 'none';
+  manifest-src 'self';
+  script-src 'self' https://esm.sh;
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data:;
+  font-src 'self';
+  media-src 'none';
+  connect-src 'self' https://esm.sh https://svqcioxecvmipgrswsik.supabase.co wss://svqcioxecvmipgrswsik.supabase.co;
+  upgrade-insecure-requests">
+
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CYBER-TRACKER 365</title>
+<meta name="description" content="Личный трекер силовых и калистеники: шпагат, горизонт, стойка на руках, жим, присед, становая в сумо">
+<meta name="theme-color" content="#06090f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f2f5f9" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CT-365">
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./assets/icon.svg">
+
+<link rel="stylesheet" href="./src/styles/theme.css">
+<link rel="stylesheet" href="./src/styles/env.css">
+<link rel="stylesheet" href="./src/styles/components.css">
+<link rel="stylesheet" href="./src/styles/layout.css">
+</head>
+<body>
+
+<!-- ══════════ ФОНОВАЯ СРЕДА ══════════ -->
+<div class="env" aria-hidden="true">
+  <div class="grid"></div>
+  <span class="orb"></span><span class="orb"></span><span class="orb"></span>
+
+  <div class="hud-bg">
+    <span class="hud-r r1"></span>
+    <span class="hud-r r2"></span>
+    <span class="hud-r r3"></span>
+    <span class="hud-r r4"></span>
+    <span class="hud-sweep"></span>
+    <span class="hud-cross"></span>
+  </div>
+
+  <div class="rain" id="envRain"></div>
+  <div class="scan"></div>
+</div>
+
+<!-- ══════════ ВХОД ══════════ -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo" id="gateLogo"></div>
+    <h1 class="gate-title">CYBER-TRACKER&nbsp;365</h1>
+    <div class="gate-sub">ПРОТОКОЛ ПОДГОТОВКИ · 3 ЦИКЛА В НЕДЕЛЮ</div>
+    <div class="gate-body" id="gateBody">
+      <p class="gate-note">Проверяю сессию…</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ ПРИЛОЖЕНИЕ ══════════ -->
+<div id="app"></div>
+
+<!-- ══════════ СЛУЖЕБНЫЕ СЛОИ ══════════ -->
+<div id="fx-layer" aria-hidden="true"></div>
+<div id="toasts" role="status" aria-live="polite"></div>
+
+<noscript>
+  <div style="padding:40px;font-family:monospace">
+    CYBER-TRACKER 365 требует JavaScript. Включите его, чтобы установить связь.
+  </div>
+</noscript>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

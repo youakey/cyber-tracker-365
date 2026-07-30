@@ -1,0 +1,143 @@
+/* ══════════════════════════════════════════════════════════════
+   CYBER-TRACKER 365 — v2 «OPERATIONS CONSOLE»
+   Тёмная консоль · циан + янтарь · мягкие тени · светлая тема
+   Sans для текста, моно — только для меток, чисел и кнопок.
+   ══════════════════════════════════════════════════════════════ */
+
+:root{
+  --void:      #04060a;
+  --bg:        #06090f;
+  --surface:   #0b111a;
+  --surface-2: #101927;
+  --elevated:  #16202f;
+  --line:      #1b2739;
+  --line-hot:  #2b415c;
+
+  --txt:   #e4f0ff;
+  --txt-2: #8ba4c0;
+  --txt-3: #52687f;
+
+  --cyan:     #22e3d4;
+  --cyan-2:   #00a9c9;
+  --cyan-dim: #22e3d418;
+  --elec:     #4d9fff;
+  --amber:    #ffb020;
+  --amber-dim:#ffb02018;
+  --red:      #ff4d5e;
+  --red-dim:  #ff4d5e18;
+  --green:    #2ee6a8;
+  --green-dim:#2ee6a818;
+  --violet:   #a78bfa;
+
+  --grad:      linear-gradient(135deg,#22e3d4 0%,#4d9fff 100%);
+  --grad-warm: linear-gradient(135deg,#ffd166 0%,#ffb020 55%,#ff7a18 100%);
+  --grad-soft: linear-gradient(135deg,#22e3d422 0%,#4d9fff14 100%);
+
+  /* цвета шести протоколов */
+  --p-split:     #2ee6a8;
+  --p-planche:   #a78bfa;
+  --p-handstand: #22e3d4;
+  --p-bench:     #4d9fff;
+  --p-squat:     #ffb020;
+  --p-deadlift:  #ff7a8a;
+
+  --sh-1: inset 0 1px 0 #ffffff08, 0 2px 8px -3px #000000cc;
+  --sh-2: inset 0 1px 0 #ffffff0d, 0 12px 30px -14px #000000e6;
+  --sh-3: inset 0 1px 0 #ffffff12, 0 26px 60px -22px #000;
+  --glow:      0 0 0 1px #22e3d43d, 0 0 26px -6px #22e3d47a;
+  --glow-soft: 0 0 22px -8px #22e3d466;
+
+  --r-s: 10px;
+  --r:   14px;
+  --r-l: 20px;
+
+  --sans: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, 'Helvetica Neue', sans-serif;
+  --mono: ui-monospace, 'SF Mono', SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monospace;
+  --tab-h: calc(62px + env(safe-area-inset-bottom));
+
+  --ease:   cubic-bezier(.22,.68,.36,1);
+  --spring: cubic-bezier(.34,1.42,.5,1);
+}
+
+[data-theme="light"]{
+  --void:#eef2f7; --bg:#f2f5f9; --surface:#ffffff; --surface-2:#f4f7fb;
+  --elevated:#ffffff; --line:#d8e0ea; --line-hot:#b6c5d6;
+  --txt:#0a1420; --txt-2:#4a5c70; --txt-3:#7d8fa3;
+  --cyan:#0891a8; --cyan-2:#056e82; --cyan-dim:#0891a814;
+  --elec:#1f6fd8; --amber:#b4700a; --amber-dim:#b4700a14;
+  --red:#d1354a; --red-dim:#d1354a14;
+  --green:#0f9f72; --green-dim:#0f9f7214; --violet:#7c5cd6;
+  --grad:linear-gradient(135deg,#0891a8,#1f6fd8);
+  --grad-warm:linear-gradient(135deg,#f0a500,#e06a00);
+  --grad-soft:linear-gradient(135deg,#0891a814,#1f6fd80d);
+  --p-split:#0f9f72; --p-planche:#7c5cd6; --p-handstand:#0891a8;
+  --p-bench:#1f6fd8; --p-squat:#b4700a; --p-deadlift:#c8465a;
+  --sh-1:0 1px 2px #0a142010; --sh-2:0 6px 20px -8px #0a142026; --sh-3:0 20px 48px -20px #0a142033;
+  --glow:0 0 0 1px #0891a833, 0 0 20px -8px #0891a855;
+  --glow-soft:0 0 18px -8px #0891a844;
+}
+
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html{ -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0; font-family:var(--sans); background:var(--bg); color:var(--txt);
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  overscroll-behavior-y:none; overflow-x:hidden;
+}
+
+h1,h2,h3,h4{ margin:0; font-weight:660; letter-spacing:-.02em; line-height:1.22; }
+h1{ font-size:26px } h2{ font-size:18px } h3{ font-size:15.5px }
+p{ margin:0 0 10px }
+a{ color:var(--cyan); text-decoration:none }
+a:hover{ text-decoration:underline }
+code,pre,.mono{ font-family:var(--mono) }
+img,svg{ display:block; max-width:100% }
+button{ font:inherit; color:inherit }
+
+::selection{ background:var(--cyan); color:var(--void) }
+
+*::-webkit-scrollbar{ width:8px; height:8px }
+*::-webkit-scrollbar-track{ background:transparent }
+*::-webkit-scrollbar-thumb{ background:var(--line-hot); border-radius:4px }
+*::-webkit-scrollbar-thumb:hover{ background:var(--cyan) }
+
+/* ── утилиты ── */
+.muted{ color:var(--txt-2) } .dim{ color:var(--txt-3) }
+.tiny{ font-size:12.5px } .sm{ font-size:13.5px } .center{ text-align:center }
+.nowrap{ white-space:nowrap } .hidden{ display:none !important }
+.row{ display:flex; align-items:center; gap:10px } .wrap{ flex-wrap:wrap }
+.col{ display:flex; flex-direction:column }
+.between{ justify-content:space-between } .grow{ flex:1; min-width:0 }
+.gap-1{gap:4px}.gap-2{gap:8px}.gap-3{gap:12px}.gap-4{gap:16px}
+.grid{ display:grid; gap:12px }
+.g2{ grid-template-columns:1fr 1fr } .g3{ grid-template-columns:repeat(3,1fr) }
+.g4{ grid-template-columns:repeat(4,1fr) }
+.grid > *, .row > *{ min-width:0 }
+.mt{ margin-top:12px } .mt2{ margin-top:24px }
+
+.c-cyan{color:var(--cyan)} .c-green{color:var(--green)} .c-amber{color:var(--amber)}
+.c-red{color:var(--red)} .c-violet{color:var(--violet)} .c-elec{color:var(--elec)}
+
+/* заголовок секции в стиле консоли */
+.section-h{
+  display:flex; align-items:center; gap:10px; margin:28px 2px 14px;
+  font-family:var(--mono);
+}
+.section-h:first-child{ margin-top:4px }
+.section-h h2{
+  flex:none; font-family:var(--sans); font-size:16px; text-transform:uppercase;
+  letter-spacing:.08em; font-weight:700;
+}
+.section-h::before{
+  content:'▸'; color:var(--cyan); font-size:12px; flex:none;
+  animation:blinkCaret 2.4s steps(1) infinite;
+}
+@keyframes blinkCaret{ 0%,64%{opacity:1} 65%,100%{opacity:.25} }
+.section-h .rule{ flex:1; height:1px; background:linear-gradient(90deg,var(--line-hot),transparent) }
+.section-h .aside{ flex:none; font-size:11px; color:var(--txt-3); letter-spacing:.04em }
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:.01ms !important; scroll-behavior:auto !important }
+}

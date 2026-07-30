@@ -1,0 +1,190 @@
+/* ══════════════════════════════════════════════════════════════
+   РАСКЛАДКА
+   Мобильная: верхняя панель + одна колонка + нижний таббар.
+   Десктоп (≥880px): сайдбар слева + колонка контента.
+   ══════════════════════════════════════════════════════════════ */
+
+#app{ display:none }
+/* fill-mode: backwards, не both. С both браузер после конца анимации
+   продолжает применять её значения, и transform у #app застывает
+   единичной матрицей — а любой transform, кроме none, делает элемент
+   containing block для position:fixed, и таббар отрывается от экрана.
+   Поэтому в кадре анимации только opacity. */
+#app.on{ display:block; animation:appIn .5s var(--ease) backwards }
+@keyframes appIn{ from{ opacity:0 } }
+
+/* ───────────────────────── ВЕРХНЯЯ ПАНЕЛЬ ───────────────────────── */
+.topbar{
+  position:sticky; top:0; z-index:60; display:flex; align-items:center; gap:10px;
+  padding:max(10px,env(safe-area-inset-top)) 16px 10px;
+  overflow:hidden;
+  background:color-mix(in srgb,var(--bg) 74%,transparent);
+  backdrop-filter:saturate(170%) blur(20px); -webkit-backdrop-filter:saturate(170%) blur(20px);
+  border-bottom:1px solid var(--line);
+}
+.topbar::after{
+  content:''; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  opacity:.5; animation:sweepLine 7s var(--ease) infinite;
+}
+@keyframes sweepLine{ 0%,100%{ transform:translateX(-60%) scaleX(.4); opacity:0 }
+  50%{ transform:translateX(60%) scaleX(1); opacity:.55 } }
+
+.brand{ display:flex; align-items:center; gap:10px; font-family:var(--mono);
+  font-weight:700; letter-spacing:.06em; font-size:14px; cursor:pointer; user-select:none }
+.brand-mark{
+  width:30px; height:30px; border-radius:9px; display:grid; place-items:center; flex:none;
+  background:var(--surface-2); border:1px solid var(--line-hot); box-shadow:var(--glow-soft);
+}
+.brand-mark svg{ width:17px; height:17px; color:var(--cyan) }
+.brand .sub{ font-size:10px; color:var(--txt-3); letter-spacing:.14em }
+.spacer{ flex:1 }
+
+/* индикатор связи */
+.netstat{ display:none; align-items:center; gap:6px; font-family:var(--mono);
+  font-size:10.5px; letter-spacing:.06em; color:var(--txt-3); text-transform:uppercase }
+.netstat .dot{ width:6px; height:6px; border-radius:50%; background:var(--green);
+  box-shadow:0 0 10px var(--green); animation:blinkCaret 2.6s steps(1) infinite }
+.netstat.ghost .dot{ background:var(--amber); box-shadow:0 0 10px var(--amber) }
+@media (min-width:700px){ .netstat{ display:inline-flex } }
+
+/* ───────────────────────── КОЛОНКА КОНТЕНТА ───────────────────────── */
+.layout{ display:block }
+.sidebar{ display:none }
+main{ max-width:1060px; margin:0 auto; padding:18px 16px calc(var(--tab-h) + 30px) }
+
+/* ───────────────────────── НИЖНИЙ ТАББАР ───────────────────────── */
+.tabbar{
+  position:fixed; left:0; right:0; bottom:0; z-index:70;
+  display:grid; grid-template-columns:repeat(6,1fr);
+  padding-bottom:env(safe-area-inset-bottom);
+  /* Непрозрачный фон вместо размытия: размытие подложки на fixed-элементе —
+     главный источник рывков при инерционной прокрутке на iOS. */
+  background:var(--bg); border-top:1px solid var(--line);
+  transform:translate3d(0,0,0);
+}
+.tab{
+  border:0; background:none; cursor:pointer; padding:9px 2px 8px; position:relative;
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  color:var(--txt-3); font-family:var(--mono); font-size:9.5px; font-weight:650;
+  letter-spacing:.06em; text-transform:uppercase; transition:color .22s;
+}
+.tab svg{ width:21px; height:21px; transition:transform .3s var(--spring), filter .3s }
+.tab.on{ color:var(--cyan) }
+.tab.on svg{ transform:translateY(-3px); filter:drop-shadow(0 0 7px #22e3d4aa) }
+.tab.on::before{
+  content:''; position:absolute; top:0; left:50%; width:24px; height:2px;
+  transform:translateX(-50%); background:var(--cyan); box-shadow:0 0 10px var(--cyan);
+  animation:tabPop .32s var(--spring) backwards;
+}
+@keyframes tabPop{ from{ transform:translateX(-50%) scaleX(0) } }
+@media (max-width:380px){
+  .tab{ font-size:8.5px; letter-spacing:.02em }
+  .tab svg{ width:19px; height:19px }
+}
+
+/* ───────────────────────── КНОПКА БЫСТРОЙ ЗАПИСИ ───────────────────────── */
+.fab{
+  position:fixed; z-index:71; right:16px; bottom:calc(var(--tab-h) + 14px);
+  width:54px; height:54px; border-radius:17px; border:0; cursor:pointer;
+  display:grid; place-items:center; color:#041318; background:var(--grad);
+  box-shadow:0 14px 34px -12px #22e3d4cc, inset 0 1px 0 #ffffff40;
+  transition:transform .2s var(--spring), box-shadow .24s;
+}
+.fab svg{ width:23px; height:23px }
+.fab:hover{ transform:translateY(-3px) }
+.fab:active{ transform:scale(.92) }
+
+/* ───────────────────────── ДЕСКТОП ───────────────────────── */
+@media (min-width:880px){
+  .layout{ display:grid; grid-template-columns:232px 1fr; gap:26px;
+    max-width:1240px; margin:0 auto; padding:0 22px }
+  .sidebar{
+    display:block; position:sticky; top:62px; height:calc(100dvh - 62px);
+    padding:20px 0; overflow-y:auto;
+  }
+  .snav{ display:flex; flex-direction:column; gap:3px }
+  .snav button{
+    display:flex; align-items:center; gap:12px; width:100%; position:relative;
+    border:0; background:none; cursor:pointer; padding:10px 13px; border-radius:var(--r-s);
+    font-family:var(--mono); font-size:12px; font-weight:650; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--txt-3); text-align:left;
+    transition:background .2s, color .2s, transform .18s var(--ease);
+  }
+  .snav button svg{ width:18px; height:18px; flex:none }
+  .snav button:hover{ background:var(--surface); color:var(--txt); transform:translateX(3px) }
+  .snav button.on{ background:var(--grad-soft); color:var(--cyan) }
+  .snav button.on::before{
+    content:''; position:absolute; left:-13px; top:8px; bottom:8px; width:2px;
+    border-radius:2px; background:var(--cyan); box-shadow:0 0 10px var(--cyan);
+  }
+  .sidebar-foot{
+    margin-top:20px; padding-top:16px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:10.5px; color:var(--txt-3); line-height:1.7;
+  }
+  .sidebar-foot::before{ content:'~/ct-365 $ '; color:var(--cyan); opacity:.7 }
+
+  main{ max-width:none; margin:0; padding:22px 0 60px }
+  .tabbar, .fab{ display:none }
+  :root{ --tab-h:0px }
+
+  /* на широком экране контент раскладывается в две колонки */
+  .dual{ display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:start }
+  .dual-wide{ display:grid; grid-template-columns:1.35fr 1fr; gap:12px; align-items:start }
+}
+
+@media (min-width:1200px){
+  .trio{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; align-items:start }
+}
+
+/* ───────────────────────── ЭКРАН ВХОДА ───────────────────────── */
+#gate{
+  position:fixed; inset:0; z-index:200; display:grid; place-items:center;
+  padding:24px; background:var(--bg); overflow-y:auto;
+}
+.gate-card{ width:min(380px,100%); text-align:center; animation:gateIn .7s var(--ease) backwards }
+@keyframes gateIn{ from{ opacity:0; transform:translateY(16px) scale(.97) } }
+.gate-logo{
+  width:74px; height:74px; margin:0 auto 18px; border-radius:20px;
+  display:grid; place-items:center; position:relative;
+  background:var(--surface-2); border:1px solid var(--line-hot);
+  box-shadow:var(--glow), var(--sh-2);
+}
+.gate-logo svg{ width:36px; height:36px; color:var(--cyan) }
+.gate-logo::before{
+  content:''; position:absolute; inset:-9px; border-radius:26px;
+  border:1px solid transparent; border-top-color:var(--cyan); border-right-color:#22e3d44d;
+  animation:spin 3.4s linear infinite;
+}
+.gate-logo::after{
+  content:''; position:absolute; inset:-9px; border-radius:26px;
+  border:1px dashed #22e3d426; animation:spin 14s linear infinite reverse;
+}
+@keyframes spin{ to{ transform:rotate(360deg) } }
+.gate-title{ font-family:var(--mono); font-size:19px; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase }
+.gate-sub{ font-size:12px; color:var(--txt-3); margin-top:5px; letter-spacing:.04em }
+.gate-body{ margin-top:20px; text-align:left }
+.gate-note{ font-size:13px; line-height:1.55; color:var(--txt-2); margin:0 0 16px }
+.gate-msg{
+  font-size:12.5px; line-height:1.5; margin:0 0 14px; padding:11px 13px;
+  border-radius:var(--r-s); border:1px solid var(--line); background:var(--surface-2);
+}
+.gate-msg.ok { color:var(--cyan); border-color:color-mix(in srgb,var(--cyan) 34%,transparent) }
+.gate-msg.err{ color:var(--red);  border-color:color-mix(in srgb,var(--red) 40%,transparent) }
+.gate-msg.warn{ color:var(--amber); border-color:color-mix(in srgb,var(--amber) 40%,transparent) }
+.gate-links{ display:flex; justify-content:space-between; gap:12px; margin-top:16px }
+.gate-goals{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-top:22px }
+#gate.shake .gate-card{ animation:gateShake .45s }
+@keyframes gateShake{ 0%,100%{transform:translateX(0)} 18%{transform:translateX(-10px)}
+  38%{transform:translateX(10px)} 58%{transform:translateX(-6px)} 78%{transform:translateX(6px)} }
+
+/* ───────────────────────── СЛОЙ ЭФФЕКТОВ ───────────────────────── */
+#fx-layer{ position:fixed; inset:0; z-index:750; pointer-events:none }
+#fx-layer canvas{ position:absolute; inset:0; width:100%; height:100% }
+
+/* мягкая встряска — вместо жёсткого тряса экрана */
+.nudge{ animation:nudge .4s var(--ease) }
+@keyframes nudge{ 0%,100%{transform:none} 30%{transform:translateY(-5px)} 62%{transform:translateY(2px)} }
+
+@media print{ .tabbar,.topbar,.sidebar,.env,.fab{ display:none !important } }

@@ -1,0 +1,15 @@
+{
+  "name": "CYBER-TRACKER 365",
+  "short_name": "CT-365",
+  "description": "Личный трекер силовых и калистеники.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06090f",
+  "theme_color": "#06090f",
+  "icons": [
+    { "src": "./assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
