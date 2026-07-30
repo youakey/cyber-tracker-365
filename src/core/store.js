@@ -85,11 +85,19 @@ export function recompute() {
   S.streak = streak;
 
   /* --- energy cells: decay from days since last session + weekly shortfall - */
+  /* У пустого профиля батарея не «разряжена», а неизвестна. Иначе новый
+     пользователь при первом входе получает красную тревогу и аберрацию
+     за то, что ещё ничего не успел сделать. */
   const lastDay = S.logs[0]?.performed_on;
-  const idle = lastDay ? Math.floor((Date.parse(today()) - Date.parse(lastDay)) / 864e5) : 9;
-  const shortfall = Math.max(0, S.quota - S.weekSessions);
-  S.energy = clamp(100 - idle * 11 - shortfall * 9, 0, 100);
-  S.depleted = S.energy < 35;
+  if (!lastDay) {
+    S.energy = 100;
+    S.depleted = false;
+  } else {
+    const idle = Math.floor((Date.parse(today()) - Date.parse(lastDay)) / 864e5);
+    const shortfall = Math.max(0, S.quota - S.weekSessions);
+    S.energy = clamp(100 - idle * 11 - shortfall * 9, 0, 100);
+    S.depleted = S.energy < 35;
+  }
 
   /* --- EXP multiplier from equipped cyberware --- */
   const equipped = S.gear.filter(g => g.equipped).map(g => g.gear_code);

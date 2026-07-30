@@ -76,10 +76,13 @@ export function Hologram(view = 'front', opts = {}) {
   /* defs: scan gradient */
   const defs = svg('defs');
   const lg = svg('linearGradient', { id: `scan-${view}`, x1:0, y1:0, x2:0, y2:1 });
+  /* Явный var(--cyan), а не currentColor: currentColor у <stop> берётся
+     из свойства color предка, то есть из цвета текста страницы, и луч
+     получался белым пятном вместо бирюзовой полосы. */
   lg.append(
-    svg('stop', { offset:'0%',  'stop-color':'currentColor', 'stop-opacity':0 }),
-    svg('stop', { offset:'50%', 'stop-color':'currentColor', 'stop-opacity':.4 }),
-    svg('stop', { offset:'100%','stop-color':'currentColor', 'stop-opacity':0 }),
+    svg('stop', { offset:'0%',  'stop-color':'var(--cyan)', 'stop-opacity':0 }),
+    svg('stop', { offset:'50%', 'stop-color':'var(--cyan)', 'stop-opacity':.35 }),
+    svg('stop', { offset:'100%','stop-color':'var(--cyan)', 'stop-opacity':0 }),
   );
   defs.append(lg);
   s.append(defs, silhouette(view));

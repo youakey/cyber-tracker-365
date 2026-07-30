@@ -255,7 +255,9 @@ input::placeholder{ color:var(--txt-3) }
 .toast .tb{ font-size:12.5px; color:var(--txt-2); line-height:1.45 }
 
 /* ───────────────────────── ГОЛОГРАММА ───────────────────────── */
-.holo{ position:relative; display:flex; justify-content:center }
+.holo{ position:relative; display:flex; flex-direction:column; align-items:center }
+/* Именно column. При row подсказка становилась вторым flex-элементом
+   рядом с svg и сминалась в узкий столбец текста сбоку от фигуры. */
 .holo svg{ width:100%; height:auto; overflow:visible }
 .holo .mz{
   fill:color-mix(in srgb,var(--cyan) 7%,transparent);
