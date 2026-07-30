@@ -30,11 +30,19 @@ export const ICON = {
   swords:   w('<path d="M4.5 4.5h3l9.5 9.5-3 3L4.5 7.5zM19.5 4.5h-3L7 14l3 3 9.5-9.5z"/>'),
 };
 
-/** Возвращает готовый SVG-элемент. */
-export const icon = (name, cls = '') => {
+/**
+ * Возвращает готовый SVG-элемент.
+ * Размер задаётся атрибутами, а не только CSS: без них svg без правила
+ * растягивается на всю ширину родителя. Любое CSS-правило (.btn svg и
+ * прочие) перебивает атрибуты, так что точечные размеры продолжают
+ * работать как раньше.
+ */
+export const icon = (name, cls = '', size = 16) => {
   const span = document.createElement('span');
   span.innerHTML = ICON[name] ?? ICON.overview;
   const svg = span.firstElementChild;
+  svg.setAttribute('width', size);
+  svg.setAttribute('height', size);
   if (cls) svg.setAttribute('class', cls);
   return svg;
 };

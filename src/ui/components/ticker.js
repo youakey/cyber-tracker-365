@@ -13,6 +13,7 @@ let feed = [];
 let host = null;
 
 export function pushLog(text, kind = '') {
+  if (feed[0]?.text === text) return;      // не дублируем строку подряд
   feed.unshift({ text, kind, ts: stamp() });
   if (feed.length > MAX) feed.length = MAX;
   paint();
@@ -45,14 +46,24 @@ const POOL = {
     'Норма недели выполнена. Показатели стабильны.',
     'Протокол соблюдается. Продолжайте в том же темпе.',
   ],
+  empty: [
+    'Журнал пуст. Первая запись задаст точку отсчёта.',
+    'Замерьте текущие показатели — без них не с чем сравнивать прогресс.',
+    'Начните с любого протокола: цифры важнее идеального старта.',
+  ],
 };
 
 function synth() {
   const s = S;
   if (!s.profile) return { text: pick(POOL.idle), kind: '' };
 
+  /* Пустому профилю не говорим про откат: человек ещё ничего не начинал,
+     а лента иначе повторяет «долгий перерыв» каждые 14 секунд. */
   const last = s.logs[0]?.performed_on;
-  const idle = last ? Math.floor((Date.now() - Date.parse(last)) / 864e5) : 99;
+  if (!last) {
+    return { text: pick(POOL.empty), kind: '' };
+  }
+  const idle = Math.floor((Date.now() - Date.parse(last)) / 864e5);
   if (idle >= 5) return { text: pick(POOL.atrophy), kind: 'crit' };
   if (s.depleted) return { text: pick(POOL.depleted), kind: 'crit' };
 

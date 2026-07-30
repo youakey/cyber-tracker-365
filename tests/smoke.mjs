@@ -146,6 +146,14 @@ const journal = shellM.SECTIONS[3].build().outerHTML;
 say('журнал: календарь + записи', journal.includes('Календарь') && journal.includes('Последние записи'));
 say('дни с тренировками подсвечены', /class="[^"]*lv[123]/.test(journal));
 
+/* ─────────── 5b. иконки не растянуты ─────────── */
+{
+  const icons = [...shell.root.querySelectorAll('svg')];
+  const sized = icons.every(s => s.hasAttribute('width') || /\bwidth\s*:/.test(s.getAttribute('style') || ''));
+  say('у всех иконок задан размер', sized && icons.length > 5,
+      `${icons.filter(s => s.hasAttribute('width')).length} из ${icons.length}`);
+}
+
 /* ─────────── 6. тема ─────────── */
 shellM.setTheme('light');
 say('светлая тема применяется', document.documentElement.dataset.theme === 'light');
